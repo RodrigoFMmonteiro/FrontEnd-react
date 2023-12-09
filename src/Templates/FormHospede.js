@@ -2,8 +2,8 @@ import { Container, FormControl, FormLabel, FormCheck } from "react-bootstrap";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useState } from "react";
 import { urlBase } from "../utilitarios/definicoes";
-import ReactInputMask from "react-input-mask";
-
+import CaixaSelecao from "../utilitarios/caixaSelecao";
+import TabelaTelefones from "../utilitarios/tabelaTelefones";
 
 const boxcadall_style = {
     padding: '5px',
@@ -12,16 +12,19 @@ const boxcadall_style = {
     height: '450px',
 }
 
-export default function FormHotel(props){
+export default function FormHospede(props){
 
     const [validado, setValidacao] = useState(false);
     const [hospede, sethospede] = useState(props.hospede);
+    const [telefoneSelecionado, settelefoneSelecionado] = useState({});
+    const [listaTelefones, setListaTelefones] = useState([]);
+    const [telefone, setTelefone] = useState(props.hospedeEmEdicao);
 
     function manipulaMudanca(e){
         const elemForm = e.currentTarget;
         const id = elemForm.id;
         const valor = elemForm.value;
-        sethospede({...hospede, [id]: valor });
+        setTelefone({...telefone, [id]: valor });
     }
 
     function manipulaSubmissao(evento){
@@ -83,7 +86,7 @@ export default function FormHotel(props){
                     <FormLabel>ID</FormLabel>
                         <Form.Control
                             disabled
-                            //value={'ID'}
+                            value={hospede.ID}
                             id="ID">
                         </Form.Control>
                 </Col>
@@ -93,27 +96,24 @@ export default function FormHotel(props){
                         required 
                         type="text"
                         placeholder=""
-                        //value={'nome'}
+                        value={hospede.nome}
                         id="nome"
                         onChange={manipulaMudanca} />
                     <Form.Control.Feedback type="invalid">Insira um nome</Form.Control.Feedback>
                 </Col>
 
                 <Col>
-                <Col>
                     <Form.Label>CPF/CNPJ</Form.Label>
                     <Form.Control
                         required 
                         type="text"
                         placeholder=""
-                        //value={'nome'}
+                        value={hospede.cpf}
                         id="doc"
                         onChange={manipulaMudanca} />
                     <Form.Control.Feedback type="invalid">Insira o CPF/CNPJ</Form.Control.Feedback>
                 </Col>
-                
-                </Col>
-          
+                         
                 </Row>
 
                 <Row className="mt-4">
@@ -123,7 +123,8 @@ export default function FormHotel(props){
                         //value={'endereco'}
                         onChange={manipulaMudanca}
                         required 
-                        type="text"   
+                        type="text" 
+                        value={hospede.endereco}  
                         id="endreco"/>
                     <Form.Control.Feedback type="invalid">Insira um veículo</Form.Control.Feedback>
                 </Col>
@@ -133,29 +134,68 @@ export default function FormHotel(props){
                         //value={'email'}
                         onChange={manipulaMudanca}
                         required 
-                        type="text"   
+                        type="text"
+                        value={hospede.email}   
                         id="email"/>
                     <Form.Control.Feedback type="invalid">Insira um veículo</Form.Control.Feedback>
                 </Col>
 
                 <Col>
-                    <Form.Label>WhatsApp</Form.Label>
-                    <ReactInputMask
-                    mask={'(99) 99999-9999'}
-                    //value={'telefone'}
-                    onChange={manipulaMudanca}>
-                    {()=><FormControl
-                            required
-                            type="text"
-                            id="whatsApp"
-                        />}   
-                    </ReactInputMask>
-                    <Form.Control.Feedback type="invalid">Insira um WhatsApp</Form.Control.Feedback>
+                    <FormLabel>Selecione pelo menos um telefone</FormLabel>
+                    <CaixaSelecao
+                        enderecoDado={urlBase+'/telfones'}
+                        campoChave={'ID'}
+                        campoExibicao={'telefone'}
+                        funcaoSelecao={settelefoneSelecionado}/>
                 
                 </Col>
-
                 
                 </Row>
+                <Container className="mt-4">
+                    <Row>
+                        <Col>
+                            <FormLabel>Código</FormLabel>
+                            <FormControl
+                            className="mb-3"
+                            value={telefoneSelecionado.ID}
+                            type="text"
+                            id="codigo"
+                            disabled/>
+                        </Col>
+
+                        <Col>
+                            <FormLabel>Telefone</FormLabel>
+                            <FormControl
+                            className="mb-3"
+                            value={telefoneSelecionado.telefone}
+                            type="text"
+                            id="telefone"
+                            disabled/>
+                        </Col >
+
+                        <Col>
+                            <Button className="mt-4" onClick={()=>{
+                                    const item = {
+                                        ID: telefoneSelecionado.ID,
+                                        telefone: telefoneSelecionado.telefone,                                      
+                                    }
+                                    setListaTelefones([...listaTelefones, item]);
+                                }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-file-plus-fill" viewBox="0 0 16 16">
+                                        <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM8.5 6v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 1 0z"/>
+                                    </svg>
+                            </Button>
+
+                        </Col>
+                    </Row>
+                    <Row>
+                        <TabelaTelefones
+                            listaTelefones={listaTelefones}
+                            setTelefone={setTelefone}
+                            dados={telefone}
+                            setListaTelefones={setListaTelefones}   />
+                    </Row>
+                </Container>
                 
                 <Button className="mt-3" variant="primary" type="submit"> Cadastrar</Button>
                 {' '}

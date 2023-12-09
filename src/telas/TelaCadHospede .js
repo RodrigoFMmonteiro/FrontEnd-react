@@ -1,6 +1,6 @@
 import { Cabecalho } from "../Templates/Cabecalho";
 import Pagina from "../paginas/Pagina";
-import Formhospede from "../Templates/FormHospede";
+import FormHospede from "../Templates/FormHospede";
 import Tabelahospede from "../tabelas/tabelaHospede";
 import { urlBase } from "../utilitarios/definicoes";
 import { useState, useEffect} from "react";
@@ -17,7 +17,6 @@ export default function TelaCadhospede(props){
         endereco:"",
         telefone: "",
     })
-
 
     function edicaohospede(hospede){
         setAtualizando(true);
@@ -67,7 +66,7 @@ export default function TelaCadhospede(props){
             <Pagina>
                 {
                    exibirTabela ?
-                   <Tabelahospede listahospede={hospedes} 
+                   <Tabelahospede   listahospede={hospedes} 
                                     sethospede={setHospedes}
                                     exibirTabela={setExibirTabela}
                                     editarhospedetao={edicaohospede}
@@ -75,7 +74,7 @@ export default function TelaCadhospede(props){
                                     setModoEdicao={setModoEdicao}
                                     edicaohospedet={sethospedeEdicao}/> 
                     :
-                    <Formhospede  listahospede={hospedes}
+                    <FormHospede    listahospede={hospedes}
                                     sethospede={setHospedes} 
                                     exibirTabela={setExibirTabela}
                                     modoEdicao={modoEdicao}

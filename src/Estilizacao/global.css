@@ -1,0 +1,10 @@
+@media print {
+    #btnExcluir, #btnCadastrar, #btdEditar, #menu, #pesquisa, #btn {
+        display: none;
+    }
+
+    #linha{
+        border: 2px solid black;
+        
+    }
+}
