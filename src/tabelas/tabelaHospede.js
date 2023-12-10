@@ -3,29 +3,9 @@ import { urlBase } from "../utilitarios/definicoes";
 
 export default function Tabelahospede(props){
 
-    function filtrarhospedes(e){
-        const termoBusca = e.currentTarget.value;
-        fetch(urlBase+"/hospedes", {method:"GET"})
-        .then((resposta)=> {return resposta.json()})
-        .then((listahospedes)=>{
-            if (Array.isArray(listahospedes)){
-            const resultado = listahospedes.filter((hospede) => hospede.nome.toLowerCase().includes(termoBusca.toLowerCase()));
-            props.sethospede(resultado);
-            }
-        });
-    }
-
-
     return(
         <Container>
             <h3 className="d-flex justify-content-center align-items-center">Hospedes Cadastrados</h3>
-            <Container className="d-flex mt-4 mb-3">
-                <Form.Label className="me-2"><strong>Pesquisa: </strong></Form.Label>
-                <Form.Control type="text"
-                                id="termoBusca"
-                                onChange={filtrarhospedes}>
-                </Form.Control>
-            </Container>
 
             <Table striped bordered hover variant="dark">
                 <thead>
@@ -53,7 +33,7 @@ export default function Tabelahospede(props){
                                         <td className="text-center">{hospede.email}</td>
                                         <td className="text-center">{hospede.telefone}</td>
                                         <td className="text-center">
-                                            <Button onClick={()=>{props.editarhospedetao(hospede)}}>
+                                            <Button onClick={()=>{props.editarhospede(hospede)}}>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" 
                                                     height="16" 
                                                     fill="currentColor" 

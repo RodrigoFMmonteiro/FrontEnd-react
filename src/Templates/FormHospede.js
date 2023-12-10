@@ -143,9 +143,9 @@ export default function FormHospede(props){
                 <Col>
                     <FormLabel>Selecione pelo menos um telefone</FormLabel>
                     <CaixaSelecao
-                        enderecoDado={urlBase+'/telfones'}
-                        campoChave={'ID'}
-                        campoExibicao={'telefone'}
+                        enderecoDado={urlBase+'/telefoneHospedes'}
+                        campoChave={'ID_hospede'}
+                        campoExibicao={'numero_telefone'}
                         funcaoSelecao={settelefoneSelecionado}/>
                 
                 </Col>

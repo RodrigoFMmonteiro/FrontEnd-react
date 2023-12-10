@@ -14,8 +14,10 @@ export default function TelaCadhospede(props){
     const [hospedeEmEdicao, sethospedeEdicao] = useState({
         ID: "",
         nome: "",
+        cpf: "",
         endereco:"",
-        telefone: "",
+        email: "",
+        telefone: []
     })
 
     function edicaohospede(hospede){
@@ -69,7 +71,7 @@ export default function TelaCadhospede(props){
                    <Tabelahospede   listahospede={hospedes} 
                                     sethospede={setHospedes}
                                     exibirTabela={setExibirTabela}
-                                    editarhospedetao={edicaohospede}
+                                    editarhospede={edicaohospede}
                                     excluirhospede={apagarhospede}
                                     setModoEdicao={setModoEdicao}
                                     edicaohospedet={sethospedeEdicao}/> 
