@@ -9,7 +9,7 @@ const boxcadall_style = {
     padding: '5px',
     borderRadius: '10px',
     border: '3px solid black',
-    height: '450px',
+    height: '700px',
 }
 
 export default function FormHospede(props){
